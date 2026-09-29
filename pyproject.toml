@@ -1,0 +1,28 @@
+[project]
+name = "fly-in"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "flet>=0.86.5",
+    "flet-desktop>=0.86.5",
+    "pydantic>=2.13.4",
+]
+
+[dependency-groups]
+dev = [
+    "flake8>=7.3.0",
+    "mypy>=2.3.0",
+    "pytest>=9.1.1",
+]
+
+[project.scripts]
+fly-in = "fly_in.main:main"
+
+[tool.uv]
+package = true
+
+[tool.mypy]
+mypy_path = "src"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

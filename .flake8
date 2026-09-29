@@ -1,5 +1,2 @@
 [flake8]
-# extend-exclude adds to flake8's defaults instead of replacing them,
-# so .git and __pycache__ stay excluded too.
 extend-exclude = .venv,venv,env
-max-line-length = 79
