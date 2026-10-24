@@ -1,53 +1,43 @@
-VENV   := .venv
-MAIN   := main.py
+MAIN := main.py
 
-MAP    ?= maps/easy_1.map
-ARGS   ?=
+MAP  ?= maps/easy/01_linear_path.txt
+ARGS ?=
 
-PYTHON := python3
-PIP    := $(VENV)/bin/pip
-FLAKE8 := $(VENV)/bin/flake8
-MYPY   := $(VENV)/bin/mypy
-PYTEST := $(VENV)/bin/pytest
+UV := uv
 
 MYPY_FLAGS := --warn-return-any --warn-unused-ignores \
               --ignore-missing-imports --disallow-untyped-defs \
               --check-untyped-defs
 
-.PHONY: help install run debug lint lint-strict test clean fclean re
+.PHONY: install run debug lint lint-strict test clean fclean re
 
-install: $(VENV)
-
-$(VENV): requirements.txt
-	$(PYTHON) -m venv $(VENV)
-	$(PIP) install --upgrade pip
-	$(PIP) install -r requirements.txt
-	@touch $(VENV)
+install:
+	$(UV) sync
 
 run:
-	$(PYTHON) $(MAIN) $(MAP) $(ARGS)
+	$(UV) run python $(MAIN) $(MAP) $(ARGS)
 
 debug:
-	$(PYTHON) -m pdb $(MAIN) $(MAP) $(ARGS)
+	$(UV) run python -m pdb $(MAIN) $(MAP) $(ARGS)
 
-lint: $(VENV)
-	$(FLAKE8) .
-	$(MYPY) . $(MYPY_FLAGS)
+lint:
+	$(UV) run flake8 .
+	$(UV) run mypy . $(MYPY_FLAGS)
 
-lint-strict: $(VENV)
-	$(FLAKE8) .
-	$(MYPY) . --strict
+lint-strict:
+	$(UV) run flake8 .
+	$(UV) run mypy . --strict
 
-test: $(VENV)
-	$(PYTEST) -q
+test:
+	$(UV) run pytest -q
 
 clean:
 	rm -rf .mypy_cache .pytest_cache
-	find . -type d -name '__pycache__' -not -path './$(VENV)/*' \
+	find . -type d -name '__pycache__' -not -path './.venv/*' \
 	    -exec rm -rf {} +
-	find . -type f -name '*.py[co]' -not -path './$(VENV)/*' -delete
+	find . -type f -name '*.py[co]' -not -path './.venv/*' -delete
 
 fclean: clean
-	rm -rf $(VENV)
+	rm -rf .venv
 
 re: fclean install
