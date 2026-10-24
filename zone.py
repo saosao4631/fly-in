@@ -40,7 +40,7 @@ class Zone:
 
     @property
     def capacity(self) -> int:
-        """同時に滞在できるドローンの最大数。"""
+        """同時に滞在できるドローンの最大数。start と goal だけ、ファイルの値と本当の定員がずれるためその判別"""
         if self.is_start or self.is_end:
             return sys.maxsize
         return self.max_drones
