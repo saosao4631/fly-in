@@ -24,4 +24,4 @@ class Connection:
         elif zone.name == self.second.name:
             return self.first
         else:
-            raise ValueError("Error-Conneccion.other")
+            raise ValueError("Error-Connecion.other")
