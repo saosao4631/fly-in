@@ -34,6 +34,26 @@ class Network:
         """2つのゾーンが既に繋がっているか。順序は問わない。"""
         return frozenset({a, b}) in self._connections
 
+    @property
+    def zones(self) -> list[Zone]:
+        """登録されている全ゾーン。宣言順。"""
+        return list(self._zones.values())
+
+    @property
+    def connections(self) -> list[Connection]:
+        """登録されている全接続。宣言順。"""
+        return list(self._connections.values())
+
+    @property
+    def has_start(self) -> bool:
+        """始点ハブが登録済みか。"""
+        return self._start is not None
+
+    @property
+    def has_end(self) -> bool:
+        """終点ハブが登録済みか。"""
+        return self._end is not None
+
     def zone(self, name: str) -> Zone:
         """名前からゾーンを取り出す。"""
         return self._zones[name]
