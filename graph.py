@@ -3,7 +3,21 @@ from connection import Connection
 
 
 class Network:
+    """ゾーンと接続を保持するグラフ。
+
+    台帳2つと隣接表1つの、素の辞書だけで組み立てる。グラフ
+    ライブラリは使わない。
+
+    Zone と Connection は不変（frozen）だが、この入れ物は
+    パーサが1行ずつ積んでいく間に育つので可変にしてある。
+    """
+
     def __init__(self, nb_drones: int) -> None:
+        """空のネットワークを作る。
+
+        Args:
+            nb_drones: このマップで運ぶドローンの数。
+        """
         self.nb_drones = nb_drones
         self._zones: dict[str, Zone] = {}
         self._connections: dict[frozenset[str], Connection] = {}
@@ -57,6 +71,10 @@ class Network:
     def zone(self, name: str) -> Zone:
         """名前からゾーンを取り出す。"""
         return self._zones[name]
+
+    def connection_between(self, first: str, second: str) -> Connection:
+        """2つのゾーン名を繋ぐ接続を返す。"""
+        return self._connections[frozenset({first, second})]
 
     def links_of(self, zone: Zone) -> list[Connection]:
         """そのゾーンに繋がっている接続の一覧。"""
