@@ -11,30 +11,18 @@ class Simulation:
     """
 
     def __init__(self, network: Network) -> None:
-        """ネットワークと、それを探索する PathFinder を用意する。
-
-        Args:
-            network: 走らせる対象のマップ。
-        """
+        """ネットワークと、それを探索する PathFinder を用意する。"""
         self._network = network
         self._finder = PathFinder(network)
         self._table = ReservationTable()
 
     @property
     def table(self) -> ReservationTable:
-        """計画の結果として積み上がった予約表。
-
-        どのゾーン・どの接続が、どのターンに何機ぶん使われたかが
-        入っている。計画後の集計や表示から参照する。
-        """
+        """計画の結果として積み上がった予約表。"""
         return self._table
 
     def plan_all(self) -> list[list[str]]:
-        """機体を1機ずつ順に計画し、予約表に積んでいく。
-
-        Raises:
-            ValueError: どれか1機でも経路が見つからないとき。
-        """
+        """機体を1機ずつ順に計画し、予約表に積んでいく。"""
         table = self._table
         plans: list[list[str]] = []
         for index in range(1, self._network.nb_drones + 1):
@@ -49,11 +37,7 @@ class Simulation:
 
     @staticmethod
     def to_turns(plans: list[list[str]]) -> list[list[str]]:
-        """予定表をターンごとの動きに並べ替える。
-
-        ターンT の居場所が T-1 と同じ機体は、待機したので
-        その行から省く。到着済みの機体も追跡しない。
-        """
+        """予定表をターンごとの動きに並べ替える。"""
         longest = max(len(plan) for plan in plans)
         turns: list[list[str]] = []
         for turn in range(1, longest):

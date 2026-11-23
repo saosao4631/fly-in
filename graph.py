@@ -13,11 +13,7 @@ class Network:
     """
 
     def __init__(self, nb_drones: int) -> None:
-        """空のネットワークを作る。
-
-        Args:
-            nb_drones: このマップで運ぶドローンの数。
-        """
+        """空のネットワークを作成"""
         self.nb_drones = nb_drones
         self._zones: dict[str, Zone] = {}
         self._connections: dict[frozenset[str], Connection] = {}

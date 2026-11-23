@@ -5,8 +5,6 @@ from zone import Zone
 
 RESET = "\033[0m"
 
-# マップに現れる色名を 256 色番号に対応づける。
-# ここに無い名前は着色せずそのまま出す（'rainbow' など）。
 COLOR_CODES: dict[str, int] = {
     "black": 240,
     "blue": 33,
@@ -29,16 +27,11 @@ COLOR_CODES: dict[str, int] = {
     "yellow": 226,
 }
 
-# 機体の識別用に順番に使う色。
 DRONE_CODES = [51, 213, 220, 118, 208, 147, 203, 85]
 
 
 class Renderer:
-    """色付きターミナル出力。
-
-    幅を揃えてから色で包む。逆にするとエスケープシーケンスが
-    文字数に数えられて、列が崩れる。
-    """
+    """色付きターミナル出力。"""
 
     def __init__(self, enabled: bool | None = None) -> None:
         """色を使うかどうか。省略時は端末かどうかで決める。"""

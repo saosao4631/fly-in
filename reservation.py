@@ -22,11 +22,7 @@ class ReservationTable:
         return self._zone_use.get((zone.name, turn), 0)
 
     def can_enter(self, zone: Zone, turn: int) -> bool:
-        """そのターンに、もう1機そのゾーンへ入れるか。
-
-        Zone.capacity が始点と終点では無制限を返すので、ここに
-        ハブの特別扱いを書く必要がない。
-        """
+        """そのターンに、もう1機そのゾーンへ入れるか。"""
         return self.zone_count(zone, turn) < zone.capacity
 
     def reserve_zone(self, zone: Zone, turn: int) -> None:
@@ -42,9 +38,5 @@ class ReservationTable:
         return self.link_count(link, turn) < link.capacity
 
     def reserve_link(self, link: Connection, turn: int) -> None:
-        """その接続・そのターンの枠を1つ使う。
-
-        鍵が Connection.key（frozenset）なので、向かい合った2機が
-        入れ替わる場合も同じ枠として数えられる。
-        """
+        """その接続・そのターンの枠を1つ使う。"""
         self._link_use[(link.key, turn)] = self.link_count(link, turn) + 1
