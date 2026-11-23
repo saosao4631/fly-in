@@ -3,6 +3,15 @@ from connection import Connection
 
 
 class ReservationTable:
+    """時空間の占有を数える表。
+
+    予約のターン番号は次の約束に従う。
+
+    - ゾーン: そのドローンが「そこにいる」ターン。
+    - 接続: 出発したターン。コスト c の移動は T から T+c-1 まで
+      c 枠を占有し、到着は T+c。
+    """
+
     def __init__(self) -> None:
         self._zone_use: dict[tuple[str, int], int] = {}
         self._link_use: dict[tuple[frozenset[str], int], int] = {}
