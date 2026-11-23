@@ -28,9 +28,6 @@ lint-strict:
 	$(UV) run flake8 .
 	$(UV) run mypy . --strict
 
-test:
-	$(UV) run pytest -q
-
 clean:
 	rm -rf .mypy_cache .pytest_cache
 	find . -type d -name '__pycache__' -not -path './.venv/*' \
